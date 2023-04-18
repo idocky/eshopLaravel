@@ -18,57 +18,29 @@
 
     <div class="container">
         <div class="title">
-            <h4>Коллекция</h4>
+            <h4>@lang('main.collection')</h4>
         </div>
 
         <div class="slider-container">
             <div class="slider-wrapper">
                 <a class="prev"><img src="/img/icon-left-arrow.png"></a>
                 <div class="slider">
+                    @foreach($slider as $slide)
+                        <div class="slide">
+                            <a href="{{ url('collection/' . $slide->item->slug) }}" class="nav-link">
+                                <img src="/storage/uploads/{{ $slide->item->photo }}" alt="Product 1">
+                                <h3>{{ $slide->item->{'title_' . $locale} }}</h3>
+                                @if($slide->item->discount)
+                                    <span class="text-muted">{{ $slide->item->price }} грн.</span>
+                                    <span class="text-danger ml-2">{{ $slide->item->price - $slide->item->discount }} грн.</span>
+                                @else
+                                    <span class="text-dark">{{ $slide->item->price }} грн.</span>
+                                @endif
+                            </a>
 
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 1">
-                        <h3>Product 1</h3>
-                        <div class="price">$50.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 1">
-                        <h3>Product 1</h3>
-                        <div class="price">$50.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 1">
-                        <h3>Product 1</h3>
-                        <div class="price">$50.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 1">
-                        <h3>Product 1</h3>
-                        <div class="price">$50.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 2">
-                        <h3>Product 2</h3>
-                        <div class="price">$60.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 3">
-                        <h3>Product 3</h3>
-                        <div class="price">$70.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 3">
-                        <h3>Product 3</h3>
-                        <div class="price">$70.00</div>
-                    </div>
-                    <div class="slide">
-                        <img src="/img/third-block1.jpg" alt="Product 3">
-                        <h3>Product 3</h3>
-                        <div class="price">$70.00</div>
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
-
-
             </div>
 
             <a class="next"><img src="/img/icon-right-arrow.png"></a>

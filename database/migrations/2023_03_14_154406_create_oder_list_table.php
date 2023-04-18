@@ -17,9 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('item_id');
             $table->integer('quantity');
+            $table->unsignedBigInteger('size_id');
 
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('size_id')->references('id')->on('sizes');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
 
         });
     }

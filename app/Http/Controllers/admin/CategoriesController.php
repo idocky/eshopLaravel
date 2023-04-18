@@ -28,7 +28,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required'
+            'title_ua' => 'required'
         ]);
 
         Category::create($request->all());
@@ -44,7 +44,7 @@ class CategoriesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required'
+            'title_ua' => 'required'
         ]);
 
         $category = Category::find($id);

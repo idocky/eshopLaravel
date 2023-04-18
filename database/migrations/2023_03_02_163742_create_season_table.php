@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title_ua');
+            $table->string('title_ru');
             $table->string('slug');
         });
     }

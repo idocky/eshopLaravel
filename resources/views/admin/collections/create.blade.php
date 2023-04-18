@@ -12,7 +12,7 @@
                 <div class="form-group">
                     @include('admin.errors')
                     <label for="category-name">Название коллекции (укр):</label>
-                    <input type="text" class="form-control" id="category-name" name="title" placeholder="Введите укр название коллекции">
+                    <input type="text" class="form-control" id="category-name" name="title_ua" placeholder="Введите укр название коллекции">
 
                     <label for="category-name">Название коллекции (рус):</label>
                     <input type="text" class="form-control" id="category-name" name="title_ru" placeholder="Введите ру название коллекции">

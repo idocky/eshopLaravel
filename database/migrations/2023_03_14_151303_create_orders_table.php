@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('town')->nullable();
             $table->string('department')->nullable();
-            $table->string('total_price');
-            $table->unsignedBigInteger('status_id');
+            $table->float('total_price')->nullable();
+            $table->text('commentary')->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
 
 
             $table->foreign('status_id')->references('id')->on('order_status');

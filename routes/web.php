@@ -17,21 +17,47 @@ use Illuminate\Support\Facades\Route;
 Route::get('locale/{locale}', [\App\Http\Controllers\HomeController::class, 'changeLocale'])->name('locale');
 
 Route::middleware(['set_locale'])->group(function() {
-    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+
+    Route::group(['middleware' => 'guest'], function(){
+        Route::get('register', [\App\Http\Controllers\RegisterController::class, 'create'])->name('register');
+        Route::post('register', [\App\Http\Controllers\RegisterController::class, 'store'])->name('register');
+
+        Route::get('login', [\App\Http\Controllers\LoginController::class, 'create'])->name('login');
+        Route::post('login', [\App\Http\Controllers\LoginController::class, 'store'])->name('login');
+    });
+
+    Route::group(['middleware' => 'auth'], function(){
+        Route::get('profile', [\App\Http\Controllers\LoginController::class, 'profile'])->name('profile');
+        Route::get('logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+    });
+
+
+    Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart');
+    Route::post('/cart/add/{id}', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+    Route::get('/cart/remove/{id}', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/changeQuantity', [\App\Http\Controllers\CartController::class, 'changeQuantity'])->name('cart.changeQuantity');
+    Route::get('/cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/checkout', [\App\Http\Controllers\CartController::class, 'checkout'])->name('checkout');
+    Route::post('/order/create', [\App\Http\Controllers\OrdersController::class, 'createOrder'])->name('order.create');
+
+
+    Route::group(['middleware' => 'order'], function() {
+        Route::get('/order/complete/{id}', [\App\Http\Controllers\OrdersController::class, 'thankspage'])->name('order.thanks');
+    });
+
+    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/collection', '\App\Http\Controllers\CollectionController');
 
-
-    Route::view('/item/details','item_details');
-    Route::view('/checkout','checkout');
-    Route::view('/admin','admin.index');
-
-    Route::group(['prefix' => 'admin', 'namespace' => '\App\Http\Controllers\Admin'], function(){
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin','namespace' => '\App\Http\Controllers\Admin'], function(){
         Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
         Route::resource('categories', 'CategoriesController');
         Route::resource('tags', 'TagsController');
         Route::resource('collections', 'CollectionsController');
         Route::resource('banners', 'BannersController');
         Route::resource('items', 'ItemsController');
+        Route::resource('slider', 'SliderController');
+        Route::resource('orders', '\App\Http\Controllers\OrdersController');
     });
+
 
 });

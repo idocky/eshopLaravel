@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('slick/slick.css')}}">
     <link rel="stylesheet" href="{{asset('slick/slick-theme.css')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title')</title>
 </head>
 <body>
 <nav class="navbar fornav navbar-expand-lg fixed-top bg-body-tertiary">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="/"><img src="/img/logo.png" width="48px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -50,18 +52,30 @@
 
                     <li class="nav-but">
                         <div class="icon-wrapper">
-                            <a href="#">
+                            <a href="{{ url('cart') }}">
                                 <img src="/img/icon-bag.png" width="40px">
                             </a>
                         </div>
                     </li>
-                    <li class="nav-but">
-                        <div class="icon-wrapper">
-                            <a href="#">
-                                <img src="/img/icon-login.png" width="40px">
-                            </a>
-                        </div>
-                    </li>
+                    @guest
+                        <li class="nav-but">
+                            <div class="icon-wrapper">
+                                <a href="{{ url('login') }}">
+                                    <img src="/img/icon-login.png" width="40px">
+                                </a>
+                            </div>
+                        </li>
+                    @endguest
+
+                    @auth
+                        <li class="nav-but">
+                            <div class="icon-wrapper">
+                                <a href="{{ url('profile') }}">
+                                    <img src="/img/profile.png" width="40px">
+                                </a>
+                            </div>
+                        </li>
+                    @endauth
                 </ul>
             </div>
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Composition extends Model
+class Season extends Model
 {
     use HasFactory;
 }

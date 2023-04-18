@@ -24,7 +24,7 @@ class CollectionsController extends Controller
     {
 
         $this->validate($request, [
-            'title' => 'required'
+            'title_ua' => 'required'
         ]);
 
         Collection::create($request->all());

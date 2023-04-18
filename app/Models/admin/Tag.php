@@ -17,12 +17,12 @@ class Tag extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'title_ua'
             ]
         ];
     }
 
-    protected $fillable = ['title', 'color', 'title_ru'];
+    protected $fillable = ['title_ua', 'color', 'title_ru', 'text_color'];
 
     public function items()
     {

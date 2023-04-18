@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            $table->string('color')->nullable();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('email')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            $table->dropColumn('color');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('email');
         });
     }
 };

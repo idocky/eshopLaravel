@@ -24,7 +24,7 @@ class TagsController extends Controller
     {
 
         $this->validate($request, [
-            'title' => 'required'
+            'title_ua' => 'required'
         ]);
 
         Tag::create($request->all());

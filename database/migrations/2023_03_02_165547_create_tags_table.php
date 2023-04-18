@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title_ua');
             $table->string('slug');
             $table->string('title_ru');
+            $table->string('color');
+            $table->string('text_color');
         });
     }
 

@@ -15,35 +15,36 @@
 
             <div class="product-page__images">
                 <div class="product-page__gallery">
-                    <img class="product-page__gallery-image" src="/img/hoodi-1.png" alt="Product Name" data-image-src="/img/hoodi-1.png">
-                    <img class="product-page__gallery-image" src="/img/hoodi-2.png" alt="Product Name" data-image-src="/img/hoodi-2.png">
-                    <img class="product-page__gallery-image" src="/img/hoodi-3.png" alt="Product Name" data-image-src="/img/hoodi-3.png">
-                    <img class="product-page__gallery-image" src="/img/hoodi-4.png" alt="Product Name" data-image-src="/img/hoodi-4.png">
-                    <img class="product-page__gallery-image" src="/img/hoodi-5.png" alt="Product Name" data-image-src="/img/hoodi-5.png">
+                    @foreach($galleryPhoto as $gal)
+                    <img class="product-page__gallery-image" src="/storage/uploads/{{ $gal }}" alt="Product Name" data-image-src="/storage/uploads/{{ $gal }}">
+                    @endforeach
                 </div>
 
-                <img class="product-page__main-image" src="/img/hoodi-2.png" alt="Product Name">
+                <img class="product-page__main-image" src="/storage/uploads/{{ $item->photo }}" alt="Product Name">
 
             </div>
 
 
 
             <div class="product-page__info">
-                    <h1 class="product-page__title">Толстовка chainsawman</h1>
+                    <h1 class="product-page__title">{{ $item->{'title_' . $locale} }}</h1>
                     <p class="product-page__price">
-                        <span class="product-page__discount-price">$99.99</span>
-                        <span class="product-page__new-price">$79.99</span>
+                        @if($item->discount)
+                            <span class="product-page__new-price">{{ $item->price - $item->discount }} грн.</span>
+                            <span class="product-page__discount-price">{{ $item->price }} грн.</span>
+                        @else
+                            <span class="ml-2">{{ $item->price }} грн.</span>
+                        @endif
+
 
                     </p>
                     <div class="size-options">
-                        <div class="size-option" data-size="s">S</div>
-                        <div class="size-option" data-size="m">M</div>
-                        <div class="size-option" data-size="l">L</div>
-                        <div class="size-option" data-size="xl">XL</div>
-                        <div class="size-option" data-size="xxl">XXL</div>
+                        @foreach($item_sizes as $is)
+                        <div class="size-option" data-size="{{ $is->id }}">{{$is->name}}</div>
+                        @endforeach
                     </div>
                     <div class="size-chart-wrapper">
-                        <a href="#" class="size-chart-trigger">Таблица размеров</a>
+                        <a href="#" class="size-chart-trigger">@lang('main.size_tables')</a>
                         <div class="size-chart-modal">
                             <div class="size-chart-modal-content">
                                 <table class="size-chart-table">
@@ -105,84 +106,86 @@
                             <img src="https://roz.otg.dp.gov.ua/storage/app/sites/19/uploaded-files/ukr-2.jpg" alt="Картинка 2">
                         </div>
                     </div>
+                {!! Form::open(['route' => ['cart.add', $item->id]]) !!}
+                <input type="hidden" id ="hidden_size" name="size" value="скрытое значение" hidden>
+                <input type="number" name="quantity" min="1" value="1">
+                <input type="submit" value="@lang('main.add_to_bag')" class="product-page__add-to-cart" >
+                {!! Form::close() !!}
 
-                    <button class="add-to-cart product-page__add-to-cart">Добавить в корзину</button>
+
 
 
             </div>
 
-            <div class="product-features">
-                <p class="product-description">Этот товар отличается высоким качеством и удобством использования. Он идеально подходит для повседневной носки и позволит вам чувствовать себя комфортно в любой ситуации.</p>
-                <table class="product-specifications">
-                    <tbody>
-                    <tr>
-                        <td>Состав:</td>
-                        <td>Хлопок 95%, Эластан 5%</td>
-                    </tr>
-                    <tr>
-                        <td>Цвет:</td>
-                        <td>Белый</td>
-                    </tr>
-                    <tr>
-                        <td>Размеры:</td>
-                        <td>S, M, L, XL</td>
-                    </tr>
-                    <tr>
-                        <td>Производитель:</td>
-                        <td>Название компании</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <div>
-                <h4>Вам может понравится</h4>
-            </div>
+
+
+
+
+        </div>
+
+        <div class="product-features">
+            <p class="product-description">{{ $item->{'description_' . $locale} }}</p>
+            <table class="product-specifications">
+                <tbody>
+                @if($item->composition->{'composition_' . $locale})
+                <tr>
+                    <td>@lang('main.composition'):</td>
+                    <td>{{ $item->composition->{'composition_' . $locale} }}</td>
+                </tr>
+                @endif
+                @if($item->color->{'title_' . $locale})
+                <tr>
+                    <td>@lang('main.color'):</td>
+                    <td>{{ $item->color->{'title_' . $locale} }}</td>
+                </tr>
+                @endif
+                @if($item->season->{'title_' . $locale})
+                    <tr>
+                        <td>@lang('main.season'):</td>
+                        <td>{{ $item->season->{'title_' . $locale} }}</td>
+                    </tr>
+                @endif
+                @if($item->collection->{'title_' . $locale})
+                    <tr>
+                        <td>@lang('main.collection'):</td>
+                        <td>{{ $item->collection->{'title_' . $locale} }}</td>
+                    </tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h4>@lang('main.can_like')</h4>
+        </div>
+        <br/>
+        <div class="container">
 
             <div class="slider-container">
                 <div class="slider-wrapper">
                     <a class="prev"><img src="/img/icon-left-arrow.png"></a>
                     <div class="slider">
+                        @foreach($slider as $slide)
+                            <div class="slide">
+                                <a href="{{ url('collection/' . $slide->item->slug) }}" class="nav-link">
+                                    <img src="/storage/uploads/{{ $slide->item->photo }}" alt="Product 1">
+                                    <h3>{{ $slide->item->{'title_' . $locale} }}</h3>
+                                    @if($slide->item->discount)
+                                        <span class="text-muted">{{ $slide->item->price }} грн.</span>
+                                        <span class="text-danger ml-2">{{ $slide->item->price - $slide->item->discount }} грн.</span>
+                                    @else
+                                        <span class="text-dark">{{ $slide->item->price }} грн.</span>
+                                    @endif
+                                </a>
 
-                        <div class="slide">
-                            <img src="/img/third-block1.jpg" alt="Product 1">
-                            <h3>Product 1</h3>
-                            <div class="price">$50.00</div>
-                        </div>
-                        <div class="slide">
-                            <img src="/img/third-block1.jpg" alt="Product 1">
-                            <h3>Product 1</h3>
-                            <div class="price">$50.00</div>
-                        </div>
-                        <div class="slide">
-                            <img src="/img/third-block1.jpg" alt="Product 1">
-                            <h3>Product 1</h3>
-                            <div class="price">$50.00</div>
-                        </div>
-                        <div class="slide">
-                            <img src="/img/third-block1.jpg" alt="Product 1">
-                            <h3>Product 1</h3>
-                            <div class="price">$50.00</div>
-                        </div>
-                        <div class="slide">
-                            <img src="/img/third-block1.jpg" alt="Product 2">
-                            <h3>Product 2</h3>
-                            <div class="price">$60.00</div>
-                        </div>
-                        <div class="slide">
-                            <img src="/img/third-block1.jpg" alt="Product 3">
-                            <h3>Product 3</h3>
-                            <div class="price">$70.00</div>
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
-
-
                 </div>
 
                 <a class="next"><img src="/img/icon-right-arrow.png"></a>
             </div>
-
-
         </div>
 
     </div>
@@ -208,9 +211,13 @@
         const sizeOptions = document.querySelectorAll('.size-option');
         const addToCartButton = document.querySelector('.add-to-cart');
 
-        addToCartButton.addEventListener('click', () => {
-            const selectedSize = document.querySelector('.size-option.selected').getAttribute('data-size');
-            console.log(`Товар добавлен в корзину в размере ${selectedSize}`);
+
+        sizeOptions.forEach((option) => {
+            option.addEventListener('click', () => {
+                const selectedSize = option.getAttribute('data-size');
+                let input = document.getElementById("hidden_size");
+                input.value = selectedSize;
+            });
         });
 
         sizeOptions.forEach(option => {

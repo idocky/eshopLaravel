@@ -27,7 +27,13 @@
                     <tr>
                         <td>{{ $tag->id }}</td>
                         <td>{{$tag->title_ru}}</td>
-                        <td>{{ isset($tag->color) ? $tag->color : 'Без цвета'}} </td>
+                        @if(isset($tag->color))
+                        <td>
+                            <div style="width: 50px; height: 50px; background-color: {{ $tag->color }};"></div>
+                        </td>
+                        @else
+                            <td>Без цвета</td>
+                        @endif
                         <td class="text-right">
                             <button><a href="{{ route('tags.edit', $tag->id) }}"><i class="fa fa-pencil" style="color:black;"></i></a></button>
                             {!! Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'delete']) !!}

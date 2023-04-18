@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\admin\Banner;
+use App\Models\admin\Slider;
 use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
@@ -11,7 +12,10 @@ class HomeController extends Controller
     {
 
         $banners = Banner::pluck('photo');
-        return view('main', ['banners' => $banners]);
+        $slider = Slider::all();
+        $locale = (session('locale') == 'ua') ? 'ua' : 'ru';
+
+        return view('main', ['banners' => $banners, 'slider' => $slider, 'locale' => $locale]);
     }
 
     public function changeLocale($locale)

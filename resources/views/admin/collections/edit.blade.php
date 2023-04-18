@@ -11,7 +11,7 @@
             {!! Form::open(['route' => ['collections.update', $collections->id], 'method' => 'put']) !!}
                 <div class="form-group">
                     <label for="category-name">Название коллекции (укр):</label>
-                    <input type="text" class="form-control" id="category-name" name="title" value="{{ $collections->title }}">
+                    <input type="text" class="form-control" id="category-name" name="title_ua" value="{{ $collections->title_ua }}">
 
                     <label for="category-name">Название коллекции (ру):</label>
                     <input type="text" class="form-control" id="category-name" name="title_ru" value="{{ $collections->title_ru }}">

@@ -17,12 +17,12 @@ class Category extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'title_ua'
             ]
         ];
     }
 
-    protected $fillable = ['title', 'title_ru'];
+    protected $fillable = ['title_ua', 'title_ru'];
 
     public function items()
     {

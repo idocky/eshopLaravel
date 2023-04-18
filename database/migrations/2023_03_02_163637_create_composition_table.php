@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('compositions', function (Blueprint $table) {
             $table->id();
-            $table->string('composition');
+            $table->string('composition_ua');
+            $table->string('composition_ru');
         });
     }
 
